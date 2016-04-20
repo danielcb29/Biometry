@@ -5,6 +5,7 @@
  */
 package biometria;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -25,8 +27,13 @@ public class Ventana extends javax.swing.JFrame {
     /**
      * Creates new form Ventana
      */
+    
+    private BufferedImage huella;
+    private Biometria modelo;
+    
     public Ventana() {
         initComponents();
+        modelo = new Biometria();
     }
 
     /**
@@ -41,12 +48,12 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         btCargar = new javax.swing.JButton();
-        btProcesar = new javax.swing.JButton();
+        btEcualizador = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btSalir = new javax.swing.JButton();
-        pnHuellaEntrada = new javax.swing.JPanel();
-        pnHuellaSalida = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        lbHuellaSalida = new javax.swing.JLabel();
+        lbHuellaEntrada = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -64,10 +71,11 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        btProcesar.setText("Procesar");
-        btProcesar.addActionListener(new java.awt.event.ActionListener() {
+        btEcualizador.setText("Ecualizacion");
+        btEcualizador.setEnabled(false);
+        btEcualizador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btProcesarActionPerformed(evt);
+                btEcualizadorActionPerformed(evt);
             }
         });
 
@@ -81,89 +89,72 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout pnHuellaEntradaLayout = new javax.swing.GroupLayout(pnHuellaEntrada);
-        pnHuellaEntrada.setLayout(pnHuellaEntradaLayout);
-        pnHuellaEntradaLayout.setHorizontalGroup(
-            pnHuellaEntradaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
-        );
-        pnHuellaEntradaLayout.setVerticalGroup(
-            pnHuellaEntradaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout pnHuellaSalidaLayout = new javax.swing.GroupLayout(pnHuellaSalida);
-        pnHuellaSalida.setLayout(pnHuellaSalidaLayout);
-        pnHuellaSalidaLayout.setHorizontalGroup(
-            pnHuellaSalidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
-        );
-        pnHuellaSalidaLayout.setVerticalGroup(
-            pnHuellaSalidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 224, Short.MAX_VALUE)
-        );
-
         jLabel2.setText("Daniel Correa Barrios");
+
+        lbHuellaSalida.setText("Huella Resultado");
+        lbHuellaSalida.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lbHuellaEntrada.setText("Huella entrante");
+        lbHuellaEntrada.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btSalir))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                                .addComponent(btProcesar)
-                                .addGap(139, 139, 139)))
-                        .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(lbHuellaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbHuellaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnHuellaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(pnHuellaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51))
+                        .addComponent(jLabel1)
+                        .addGap(12, 12, 12)
+                        .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(btEcualizador))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(347, 347, 347)
+                        .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnHuellaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnHuellaEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbHuellaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbHuellaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel1))
                     .addComponent(btCargar)
-                    .addComponent(btProcesar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btEcualizador))
+                .addGap(6, 6, 6)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSalir)
-                    .addComponent(jLabel2))
-                .addGap(10, 10, 10))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProcesarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btProcesarActionPerformed
+    private void btEcualizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEcualizadorActionPerformed
+
+            Image grises = modelo.grises();
+            ImageIcon iconSalida = new ImageIcon(grises.getScaledInstance(256, 256,Image.SCALE_DEFAULT));
+            lbHuellaSalida.setIcon(iconSalida);
+            add(lbHuellaSalida);
+    }//GEN-LAST:event_btEcualizadorActionPerformed
 
     private void btCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCargarActionPerformed
         // TODO add your handling code here:
@@ -172,15 +163,22 @@ public class Ventana extends javax.swing.JFrame {
         jfc.addChoosableFileFilter(new FileNameExtensionFilter("Imagenes", ImageIO.getReaderFileSuffixes()));
         jfc.setAcceptAllFileFilterUsed(false);
         if (jfc.showOpenDialog(this) !=JFileChooser.APPROVE_OPTION)return;
-        File huella = jfc.getSelectedFile();
-        BufferedImage myPicture;
+        File archivo = jfc.getSelectedFile();
+        //BufferedImage myPicture;
         try {
-            myPicture = ImageIO.read(huella);
-            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-            pnHuellaEntrada.add(picLabel);
+            huella = ImageIO.read(archivo);
+            ImageIcon iconHuella = new ImageIcon(huella.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+            lbHuellaEntrada.setIcon(iconHuella);
+            add(lbHuellaEntrada);
+            modelo.setHuella(huella);
+            btEcualizador.setEnabled(true);
+            
+
         } catch (IOException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
         
 
 
@@ -230,13 +228,13 @@ public class Ventana extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCargar;
-    private javax.swing.JButton btProcesar;
+    private javax.swing.JButton btEcualizador;
     private javax.swing.JButton btSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JPanel pnHuellaEntrada;
-    private javax.swing.JPanel pnHuellaSalida;
+    private javax.swing.JLabel lbHuellaEntrada;
+    private javax.swing.JLabel lbHuellaSalida;
     // End of variables declaration//GEN-END:variables
 }
