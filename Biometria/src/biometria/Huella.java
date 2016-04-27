@@ -12,8 +12,13 @@ package biometria;
 public class Huella {
     int[][] imagen;
     
+    int ancho;
+    int alto;
+    
     public Huella(int ancho, int alto){
         imagen = new int[ancho][alto];
+        this.ancho=ancho;
+        this.alto=alto;
     }
     
     public void setPixel(int ancho,int alto, int gris){
@@ -26,5 +31,13 @@ public class Huella {
     
     public int[][] getImagen(){
         return imagen;
+    }
+    
+    public int getAncho(){
+        return ancho;
+    }
+    
+    public int getAlto(){
+        return alto;
     }
 }

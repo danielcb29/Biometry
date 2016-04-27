@@ -28,6 +28,8 @@ public class Biometria {
 
     private BufferedImage huella;
     private Huella modelo;
+    private Huella actual; 
+    private Huella anterior;
     
     public Biometria(){
         
@@ -38,24 +40,20 @@ public class Biometria {
               
     }
     
-    public BufferedImage GraytoRGB(){
+    public BufferedImage GraytoRGB(Huella modelo){
         BufferedImage salida = new BufferedImage(huella.getWidth(), huella.getHeight(), BufferedImage.TYPE_INT_ARGB);
         for(int i=0;i<huella.getWidth();i++){
             for(int j=0;j<huella.getHeight();j++){
                 int pix = modelo.getPixel(i, j);
-                //System.out.println(pix);
-                //int rgb = pix;
-                //rgb = (rgb << 16 ) + rgb;
-                //rgb = (rgb << 8 ) + rgb;
                 int rgb = (255 << 24 ) | (pix << 16) | (pix << 8) | pix;
-                //System.out.println("rgb: "+rgb);
                 salida.setRGB(i, j, rgb);
             }
         }
         return salida;
         
     }    
-    public Huella RGBtoGray(){
+    public Huella RGBtoGray(BufferedImage huella){
+        Huella modelo = new Huella(huella.getWidth(),huella.getHeight());
         for(int i=0;i<huella.getWidth();i++){
             for(int j=0;j<huella.getHeight();j++){
                 int rgb = huella.getRGB(i, j);
@@ -70,41 +68,22 @@ public class Biometria {
         return modelo;
     }
     
-    /*public Image grisesDos(){
-        //gris = new int[huella.getHeight()*huella.getWidth()];
-        int pos = 0;
-        for(int i=0;i<huella.getHeight();i++){
-            for(int j=0;j<huella.getWidth();j++){
-                int argb = huella.getRGB(j, i);
-                int rgb[] = new int[] {
-                    (argb >> 16) & 0xff, //red
-                    (argb >>  8) & 0xff, //green
-                    (argb      ) & 0xff  //blue
-                };
-                //gris[pos] = (rgb[0] + rgb[1] + rgb[2])/3;
-                pos++;
-            }
-        }
+    public Huella ecualizar(){
         
-        BufferedImage image = new BufferedImage(huella.getHeight(), huella.getWidth(), BufferedImage.TYPE_INT_ARGB);
-        WritableRaster raster = (WritableRaster) image.getData();
-        //raster.setPixels(0,0,huella.getHeight(),huella.getWidth(),gris);
-        return image;
-
         
+        return null;
     }
-    
-    public Image grises(){
-        ImageFilter filter = new GrayFilter(false, 0);  
-        ImageProducer producer = new FilteredImageSource(huella.getSource(), filter);  
-        Image gray = Toolkit.getDefaultToolkit().createImage(producer);
-        byte[] pixels = ((DataBufferByte) huella.getRaster().getDataBuffer()).getData();
-        System.out.println(pixels[0]);
-        return gray;
-    }*/
     
     public void setHuella(BufferedImage huella){
         this.huella=huella;
         modelo = new Huella(huella.getWidth(),huella.getHeight());
+        modelo = RGBtoGray(huella);
+        actual = modelo;
+        anterior = actual;
     }
+    public Huella getModelo(){
+        return modelo;
+    }
+    
+    
 }

@@ -46,23 +46,25 @@ public class Ventana extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        taLog = new javax.swing.JTextArea();
         btCargar = new javax.swing.JButton();
-        btEcualizador = new javax.swing.JButton();
+        btGris = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btSalir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lbHuellaSalida = new javax.swing.JLabel();
         lbHuellaEntrada = new javax.swing.JLabel();
+        btBlancoNegro = new javax.swing.JButton();
+        btEcualizador = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setDragEnabled(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        taLog.setEditable(false);
+        taLog.setColumns(20);
+        taLog.setRows(5);
+        taLog.setDragEnabled(false);
+        jScrollPane1.setViewportView(taLog);
 
         btCargar.setText("Cargar Imagen");
         btCargar.addActionListener(new java.awt.event.ActionListener() {
@@ -71,11 +73,11 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        btEcualizador.setText("Ecualizacion");
-        btEcualizador.setEnabled(false);
-        btEcualizador.addActionListener(new java.awt.event.ActionListener() {
+        btGris.setText("Escala Gris");
+        btGris.setEnabled(false);
+        btGris.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btEcualizadorActionPerformed(evt);
+                btGrisActionPerformed(evt);
             }
         });
 
@@ -97,6 +99,12 @@ public class Ventana extends javax.swing.JFrame {
         lbHuellaEntrada.setText("Huella entrante");
         lbHuellaEntrada.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btBlancoNegro.setText("Blanco/Negro");
+        btBlancoNegro.setEnabled(false);
+
+        btEcualizador.setText("Ecualizacion");
+        btEcualizador.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,16 +117,24 @@ public class Ventana extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbHuellaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(12, 12, 12)
-                        .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(btEcualizador))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(347, 347, 347)
-                        .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(347, 347, 347)
+                                .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(12, 12, 12)
+                                .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btEcualizador)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btGris)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btBlancoNegro)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
@@ -134,8 +150,12 @@ public class Ventana extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addComponent(jLabel1))
                     .addComponent(btCargar)
-                    .addComponent(btEcualizador))
-                .addGap(6, 6, 6)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btGris)
+                        .addComponent(btBlancoNegro)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btEcualizador)
+                .addGap(5, 5, 5)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,16 +168,15 @@ public class Ventana extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btEcualizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEcualizadorActionPerformed
+    private void btGrisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGrisActionPerformed
 
-            //Image grises = modelo.grisesDos();
-            //ImageIcon iconSalida = new ImageIcon(grises.getScaledInstance(256, 256,Image.SCALE_DEFAULT));
-            modelo.RGBtoGray();
-            BufferedImage gris = modelo.GraytoRGB();
+            Huella result  = modelo.getModelo();
+            BufferedImage gris = modelo.GraytoRGB(result);
             ImageIcon iconSalida = new ImageIcon(gris.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
             lbHuellaSalida.setIcon(iconSalida);
             add(lbHuellaSalida);
-    }//GEN-LAST:event_btEcualizadorActionPerformed
+            taLog.append("Imagen cargada en escala de grises \n");
+    }//GEN-LAST:event_btGrisActionPerformed
 
     private void btCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCargarActionPerformed
         // TODO add your handling code here:
@@ -167,15 +186,16 @@ public class Ventana extends javax.swing.JFrame {
         jfc.setAcceptAllFileFilterUsed(false);
         if (jfc.showOpenDialog(this) !=JFileChooser.APPROVE_OPTION)return;
         File archivo = jfc.getSelectedFile();
-        //BufferedImage myPicture;
         try {
             huella = ImageIO.read(archivo);
             ImageIcon iconHuella = new ImageIcon(huella.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
             lbHuellaEntrada.setIcon(iconHuella);
             add(lbHuellaEntrada);
             modelo.setHuella(huella);
-            btEcualizador.setEnabled(true);
-            
+            btGris.setEnabled(true);
+            btBlancoNegro.setEnabled(true);
+            btEcualizador.setEnabled(true);            
+            taLog.append("Imagen cargada correctamente! \n");
 
         } catch (IOException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
@@ -230,14 +250,16 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBlancoNegro;
     private javax.swing.JButton btCargar;
     private javax.swing.JButton btEcualizador;
+    private javax.swing.JButton btGris;
     private javax.swing.JButton btSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lbHuellaEntrada;
     private javax.swing.JLabel lbHuellaSalida;
+    private javax.swing.JTextArea taLog;
     // End of variables declaration//GEN-END:variables
 }
