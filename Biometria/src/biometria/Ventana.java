@@ -150,8 +150,11 @@ public class Ventana extends javax.swing.JFrame {
 
     private void btEcualizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEcualizadorActionPerformed
 
-            Image grises = modelo.grises();
-            ImageIcon iconSalida = new ImageIcon(grises.getScaledInstance(256, 256,Image.SCALE_DEFAULT));
+            //Image grises = modelo.grisesDos();
+            //ImageIcon iconSalida = new ImageIcon(grises.getScaledInstance(256, 256,Image.SCALE_DEFAULT));
+            modelo.RGBtoGray();
+            BufferedImage gris = modelo.GraytoRGB();
+            ImageIcon iconSalida = new ImageIcon(gris.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
             lbHuellaSalida.setIcon(iconSalida);
             add(lbHuellaSalida);
     }//GEN-LAST:event_btEcualizadorActionPerformed
