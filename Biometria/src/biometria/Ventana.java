@@ -34,8 +34,42 @@ public class Ventana extends javax.swing.JFrame {
     public Ventana() {
         initComponents();
         modelo = new Biometria();
+        btAtras.setToolTipText("Regresa de un cambio de procesamiento a cambios de filtros");
+        lbFiltros.setToolTipText("Solo se pueden aplicar anter de procesar la imagen");
+        lbProcess.setToolTipText("Solo se pueden aplicar despues de hacer filtros");
     }
 
+    private void setHuellaPrincipal(){
+        ImageIcon iconHuella = new ImageIcon(huella.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+        lbHuellaEntrada.setIcon(iconHuella);
+        add(lbHuellaEntrada);
+    }
+    
+    private void enableFiltros(){
+        btBlancoNegro.setEnabled(true);
+        btEcualizador.setEnabled(true);
+        btGris.setEnabled(true);
+    }
+    
+    private void disableFiltros(){
+        btBlancoNegro.setEnabled(false);
+        btEcualizador.setEnabled(false);
+        btGris.setEnabled(false);
+    }
+    
+    private void enableProcesos(){
+        btProceso1.setEnabled(true);
+        btProceso2.setEnabled(true);
+        btProceso3.setEnabled(true);
+        
+    }
+    
+    private void disableProcesos(){
+        btProceso1.setEnabled(false);
+        btProceso2.setEnabled(false);
+        btProceso3.setEnabled(false);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,20 +83,20 @@ public class Ventana extends javax.swing.JFrame {
         taLog = new javax.swing.JTextArea();
         btCargar = new javax.swing.JButton();
         btGris = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lbCargar = new javax.swing.JLabel();
         btSalir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lbHuellaSalida = new javax.swing.JLabel();
         lbHuellaEntrada = new javax.swing.JLabel();
         btBlancoNegro = new javax.swing.JButton();
         btEcualizador = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        lbFiltros = new javax.swing.JLabel();
         btAtras = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        lbProcess = new javax.swing.JLabel();
+        btProceso1 = new javax.swing.JButton();
+        btProceso2 = new javax.swing.JButton();
+        btProceso3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -90,8 +124,8 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        jLabel1.setText("Cargar:");
+        lbCargar.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        lbCargar.setText("Cargar:");
 
         btSalir.setText("Salir");
         btSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -110,30 +144,55 @@ public class Ventana extends javax.swing.JFrame {
 
         btBlancoNegro.setText("Blanco/Negro");
         btBlancoNegro.setEnabled(false);
+        btBlancoNegro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBlancoNegroActionPerformed(evt);
+            }
+        });
 
         btEcualizador.setText("Ecualizacion");
         btEcualizador.setEnabled(false);
 
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        jLabel3.setText("Filtros:");
+        lbFiltros.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        lbFiltros.setText("Filtros:");
 
         btAtras.setText("Atras");
         btAtras.setEnabled(false);
+        btAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtrasActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         jLabel4.setText("Logs:");
 
-        jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        jLabel5.setText("Procesamiento:");
+        lbProcess.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        lbProcess.setText("Procesamiento:");
 
-        jButton1.setText("Proceso1");
-        jButton1.setEnabled(false);
+        btProceso1.setText("Proceso1");
+        btProceso1.setEnabled(false);
+        btProceso1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btProceso1ActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Proceso2");
-        jButton2.setEnabled(false);
+        btProceso2.setText("Proceso2");
+        btProceso2.setEnabled(false);
+        btProceso2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btProceso2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Proceso3");
-        jButton3.setEnabled(false);
+        btProceso3.setText("Proceso3");
+        btProceso3.setEnabled(false);
+        btProceso3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btProceso3ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Escuela Politecnica");
 
@@ -150,13 +209,13 @@ public class Ventana extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(lbProcess)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)
+                        .addComponent(btProceso1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btProceso2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
+                        .addComponent(btProceso3)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,8 +227,8 @@ public class Ventana extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel3))
+                                            .addComponent(lbCargar)
+                                            .addComponent(lbFiltros))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
@@ -205,21 +264,21 @@ public class Ventana extends javax.swing.JFrame {
                     .addComponent(lbHuellaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lbCargar)
                     .addComponent(btCargar)
                     .addComponent(btAtras))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(lbFiltros)
                     .addComponent(btGris)
                     .addComponent(btEcualizador)
                     .addComponent(btBlancoNegro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(lbProcess)
+                    .addComponent(btProceso1)
+                    .addComponent(btProceso2)
+                    .addComponent(btProceso3))
                 .addGap(3, 3, 3)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -241,12 +300,15 @@ public class Ventana extends javax.swing.JFrame {
 
     private void btGrisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGrisActionPerformed
 
+            setHuellaPrincipal();//Ponemos la imagen original en imagen de entrada
             Huella result  = modelo.getModelo();
             BufferedImage gris = modelo.GraytoRGB(result);
             ImageIcon iconSalida = new ImageIcon(gris.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
             lbHuellaSalida.setIcon(iconSalida);
             add(lbHuellaSalida);
             taLog.append("Imagen cargada en escala de grises \n");
+            enableProcesos();
+            
     }//GEN-LAST:event_btGrisActionPerformed
 
     private void btCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCargarActionPerformed
@@ -263,9 +325,7 @@ public class Ventana extends javax.swing.JFrame {
             lbHuellaEntrada.setIcon(iconHuella);
             add(lbHuellaEntrada);
             modelo.setHuella(huella);
-            btGris.setEnabled(true);
-            btBlancoNegro.setEnabled(true);
-            btEcualizador.setEnabled(true);            
+            enableFiltros();            
             taLog.append("Imagen cargada correctamente! \n");
 
         } catch (IOException ex) {
@@ -284,6 +344,51 @@ public class Ventana extends javax.swing.JFrame {
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_btSalirActionPerformed
+
+    private void btBlancoNegroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBlancoNegroActionPerformed
+        // TODO add your handling code here:
+        int val = 0;
+        try{
+            val = Integer.parseInt(JOptionPane.showInputDialog("Valor del humbral: "));
+        }catch(Exception e){
+            taLog.append("Ha cancelado o debe ingresar un valor de umbral correcto para procesar blanco y negro \n");
+            return;
+        }
+        taLog.append("Valor de humbral para blanco y negro: "+val+"\n");
+        
+        //setHuellaPrincipal();//Ponemos la imagen original en imagen de entrada
+        Huella entrada = modelo.getModelo();
+        System.out.println(entrada.getTipo());
+        Huella salidabyn = modelo.blancoNegro(entrada,val);
+        Huella salidagray = modelo.blancoNegrotoGray(salidabyn);
+        BufferedImage byn = modelo.GraytoRGB(salidagray);
+        ImageIcon iconSalida = new ImageIcon(byn.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+        lbHuellaSalida.setIcon(iconSalida);
+        add(lbHuellaSalida);
+        taLog.append("Imagen cargada en blanco y negro \n");
+        enableProcesos();
+        System.out.println("Tipo final byn:"+entrada.getTipo());
+    }//GEN-LAST:event_btBlancoNegroActionPerformed
+
+    private void btProceso1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProceso1ActionPerformed
+        // TODO add your handling code here:
+        disableFiltros();
+    }//GEN-LAST:event_btProceso1ActionPerformed
+
+    private void btAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtrasActionPerformed
+        // TODO add your handling code here:
+        disableProcesos();
+    }//GEN-LAST:event_btAtrasActionPerformed
+
+    private void btProceso2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProceso2ActionPerformed
+        // TODO add your handling code here:
+        disableFiltros();
+    }//GEN-LAST:event_btProceso2ActionPerformed
+
+    private void btProceso3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProceso3ActionPerformed
+        // TODO add your handling code here:
+        disableFiltros();
+    }//GEN-LAST:event_btProceso3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,20 +431,20 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton btCargar;
     private javax.swing.JButton btEcualizador;
     private javax.swing.JButton btGris;
+    private javax.swing.JButton btProceso1;
+    private javax.swing.JButton btProceso2;
+    private javax.swing.JButton btProceso3;
     private javax.swing.JButton btSalir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbCargar;
+    private javax.swing.JLabel lbFiltros;
     private javax.swing.JLabel lbHuellaEntrada;
     private javax.swing.JLabel lbHuellaSalida;
+    private javax.swing.JLabel lbProcess;
     private javax.swing.JTextArea taLog;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,11 +14,19 @@ public class Huella {
     
     int ancho;
     int alto;
+    String tipo;
     
     public Huella(int ancho, int alto){
         imagen = new int[ancho][alto];
         this.ancho=ancho;
         this.alto=alto;
+        tipo="none";
+    }
+    
+    public Huella(Huella h){
+        this.ancho = h.getAncho();
+        this.alto = h.getAlto();
+        this.tipo = h.getTipo();
     }
     
     public void setPixel(int ancho,int alto, int gris){
@@ -39,5 +47,13 @@ public class Huella {
     
     public int getAlto(){
         return alto;
+    }
+    
+    public String getTipo(){
+        return tipo;
+    }
+    
+    public void setTipo(String tipo){
+        this.tipo=tipo;
     }
 }
