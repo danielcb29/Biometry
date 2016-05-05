@@ -318,15 +318,16 @@ public class Ventana extends javax.swing.JFrame {
 
     private void btGrisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGrisActionPerformed
 
-            setHuellaPrincipal();//Ponemos la imagen original en imagen de entrada
             Huella result  = modelo.getModelo();
             BufferedImage gris = modelo.GraytoRGB(result);
             ImageIcon iconSalida = new ImageIcon(gris.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
             lbHuellaSalida.setIcon(iconSalida);
             add(lbHuellaSalida);
             taLog.append("Imagen cargada en escala de grises \n");
-            enableProcesos();
-            
+            //enableProcesos();
+            modelo.setAnterior(new Huella(modelo.getActual()));
+            modelo.setActual(result);
+            btAtras.setEnabled(true);
     }//GEN-LAST:event_btGrisActionPerformed
 
     private void btCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCargarActionPerformed
@@ -383,7 +384,10 @@ public class Ventana extends javax.swing.JFrame {
         lbHuellaSalida.setIcon(iconSalida);
         add(lbHuellaSalida);
         taLog.append("Imagen cargada en blanco y negro \n");
+        
+        modelo.setAnterior(new Huella(modelo.getActual()));
         modelo.setActual(salidabyn);
+        btAtras.setEnabled(true);
         //enableProcesos();
     }//GEN-LAST:event_btBlancoNegroActionPerformed
 
@@ -394,7 +398,19 @@ public class Ventana extends javax.swing.JFrame {
 
     private void btAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtrasActionPerformed
         // TODO add your handling code here:
-        disableProcesos();
+        btAtras.setEnabled(false);
+        Huella anterior = modelo.getAnterior();
+        modelo.setActual(new Huella(anterior));
+        Huella salida = new Huella(anterior);
+        if(salida.getTipo().equals("blanco-negro")){
+            salida = modelo.blancoNegrotoGray(salida);
+        }
+        BufferedImage buf = modelo.GraytoRGB(salida);
+        ImageIcon iconSalida = new ImageIcon(buf.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+        lbHuellaSalida.setIcon(iconSalida);
+        add(lbHuellaSalida);
+        taLog.append("Imagen anterior cargada \n");
+        
     }//GEN-LAST:event_btAtrasActionPerformed
 
     private void btProceso2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProceso2ActionPerformed
@@ -416,14 +432,19 @@ public class Ventana extends javax.swing.JFrame {
         lbHuellaSalida.setIcon(iconSalida);
         add(lbHuellaSalida);
         taLog.append("Imagen ecualizada y cargada \n");
+        
+        modelo.setAnterior(new Huella(modelo.getActual()));
+        modelo.setActual(salida);
+        btAtras.setEnabled(true);
     }//GEN-LAST:event_btEcualizadorActionPerformed
 
     private void btRuidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRuidoActionPerformed
         // TODO add your handling code here:
         Huella actual = modelo.getActual();
+        Huella salida;
         if(actual.getTipo().equals("blanco-negro")){
             taLog.append("La imagen ya estaba cargada en blanco y negro \n");
-            Huella salida;
+            
             salida = modelo.quitarHuecos(actual);
             salida = modelo.quitarPixels(salida);
             salida = modelo.blancoNegrotoGray(salida);
@@ -445,8 +466,6 @@ public class Ventana extends javax.swing.JFrame {
 
             Huella entrada = modelo.getModelo();
             Huella salidabyn = modelo.blancoNegro(entrada,val);
-            
-            Huella salida;
             salida = modelo.quitarHuecos(salidabyn);
             salida = modelo.quitarPixels(salida);
             salida = modelo.blancoNegrotoGray(salida);
@@ -457,6 +476,9 @@ public class Ventana extends javax.swing.JFrame {
             taLog.append("Imagen cargada suavizada \n");
             
         }
+        modelo.setAnterior(new Huella(modelo.getActual()));
+        modelo.setActual(salida);
+        btAtras.setEnabled(true);
     }//GEN-LAST:event_btRuidoActionPerformed
 
     /**

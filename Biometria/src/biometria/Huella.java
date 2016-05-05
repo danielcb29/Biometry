@@ -27,6 +27,7 @@ public class Huella {
         this.ancho = h.getAncho();
         this.alto = h.getAlto();
         this.tipo = h.getTipo();
+        this.imagen = h.getImagen();
     }
     
     public void setPixel(int ancho,int alto, int gris){
