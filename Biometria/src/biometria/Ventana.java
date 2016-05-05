@@ -383,7 +383,7 @@ public class Ventana extends javax.swing.JFrame {
         lbHuellaSalida.setIcon(iconSalida);
         add(lbHuellaSalida);
         taLog.append("Imagen cargada en blanco y negro \n");
-        
+        modelo.setActual(salidabyn);
         //enableProcesos();
     }//GEN-LAST:event_btBlancoNegroActionPerformed
 
@@ -420,8 +420,43 @@ public class Ventana extends javax.swing.JFrame {
 
     private void btRuidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRuidoActionPerformed
         // TODO add your handling code here:
-        
-        //Recibe un blanco y negro
+        Huella actual = modelo.getActual();
+        if(actual.getTipo().equals("blanco-negro")){
+            taLog.append("La imagen ya estaba cargada en blanco y negro \n");
+            Huella salida;
+            salida = modelo.quitarHuecos(actual);
+            salida = modelo.quitarPixels(salida);
+            salida = modelo.blancoNegrotoGray(salida);
+            BufferedImage sinhueco = modelo.GraytoRGB(salida);
+            ImageIcon iconSalida = new ImageIcon(sinhueco.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+            lbHuellaSalida.setIcon(iconSalida);
+            add(lbHuellaSalida);
+            taLog.append("Imagen cargada suavizada \n");
+        }else{
+            taLog.append("Debe cargarse primero en blanco y negro \n");
+            int val = 0;
+            try{
+                val = Integer.parseInt(JOptionPane.showInputDialog("Valor del humbral: "));
+            }catch(Exception e){
+                taLog.append("Ha cancelado o debe ingresar un valor de umbral correcto para procesar blanco y negro \n");
+                return;
+            }
+            taLog.append("Valor de humbral para blanco y negro: "+val+"\n");
+
+            Huella entrada = modelo.getModelo();
+            Huella salidabyn = modelo.blancoNegro(entrada,val);
+            
+            Huella salida;
+            salida = modelo.quitarHuecos(salidabyn);
+            salida = modelo.quitarPixels(salida);
+            salida = modelo.blancoNegrotoGray(salida);
+            BufferedImage sinhueco = modelo.GraytoRGB(salida);
+            ImageIcon iconSalida = new ImageIcon(sinhueco.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+            lbHuellaSalida.setIcon(iconSalida);
+            add(lbHuellaSalida);
+            taLog.append("Imagen cargada suavizada \n");
+            
+        }
     }//GEN-LAST:event_btRuidoActionPerformed
 
     /**

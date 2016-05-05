@@ -145,20 +145,16 @@ public class Biometria {
         int height = huella.getHeight();
         Huella salida = new Huella(width,height);
         
-        for (int x = 2; x < width-1; x++) {
-            for (int y = 2; y < height-1; y++) {
-                //int sum =0;
-                int a;
-                int b;
-                int c;
-                int d;
-                int e;
-                int f;
-                int g;
-                int h;
+        for (int x = 1; x < width-1; x++) {
+            for (int y = 1; y < height-1; y++) {
+                int p = entrada.getPixel(x, y);
+                int b = entrada.getPixel(x-1, y);
+                int d = entrada.getPixel(x, y-1);
+                int e = entrada.getPixel(x, y+1);
+                int g = entrada.getPixel(x+1, y);
                 
-                
-               //salida.setPixel(x, y,sum);
+                int result = p|b&g&(d|e)|d&e&(b|g);
+                salida.setPixel(x, y,result);
             }
         }
         
@@ -170,20 +166,20 @@ public class Biometria {
         int height = huella.getHeight();
         Huella salida = new Huella(width,height);
         
-        for (int x = 2; x < width-1; x++) {
-            for (int y = 2; y < height-1; y++) {
-                //int sum =0;
-                int a;
-                int b;
-                int c;
-                int d;
-                int e;
-                int f;
-                int g;
-                int h;
+        for (int x = 1; x < width-1; x++) {
+            for (int y = 1; y < height-1; y++) {
+                int p = entrada.getPixel(x, y);
+                int a = entrada.getPixel(x-1, y-1);
+                int b = entrada.getPixel(x-1, y);
+                int c = entrada.getPixel(x-1, y+1);
+                int d = entrada.getPixel(x, y-1);
+                int e = entrada.getPixel(x, y+1);
+                int f = entrada.getPixel(x+1, y-1);
+                int g = entrada.getPixel(x+1, y);
+                int h = entrada.getPixel(x+1, y+1);
                 
-                
-               //salida.setPixel(x, y,sum);
+                int result = p&((a|b|d)&(e|g|h)|(b|c|e)&(d|f|g));
+                salida.setPixel(x, y,result);
             }
         }
         
@@ -197,7 +193,7 @@ public class Biometria {
         this.huella=huella;
         //modelo = new Huella(huella.getWidth(),huella.getHeight());
         modelo = RGBtoGray(huella);
-        //actual = modelo;
+        actual = new Huella(huella.getWidth(),huella.getHeight());
         //anterior = actual;
     }
     public Huella getModelo(){
