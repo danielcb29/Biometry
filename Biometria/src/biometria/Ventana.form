@@ -34,7 +34,7 @@
                   <Group type="102" attributes="0">
                       <Component id="lbProcess" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btProceso1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btAdelgazar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btProceso2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -123,7 +123,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbProcess" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btProceso1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btAdelgazar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btProceso2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btProceso3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -275,13 +275,13 @@
         <Property name="text" type="java.lang.String" value="Procesamiento:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btProceso1">
+    <Component class="javax.swing.JButton" name="btAdelgazar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Proceso1"/>
+        <Property name="text" type="java.lang.String" value="Adelgazamiento"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btProceso1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAdelgazarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btProceso2">

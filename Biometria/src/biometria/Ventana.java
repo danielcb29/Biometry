@@ -59,14 +59,14 @@ public class Ventana extends javax.swing.JFrame {
     }
     
     private void enableProcesos(){
-        btProceso1.setEnabled(true);
+        btAdelgazar.setEnabled(true);
         btProceso2.setEnabled(true);
         btProceso3.setEnabled(true);
         
     }
     
     private void disableProcesos(){
-        btProceso1.setEnabled(false);
+        btAdelgazar.setEnabled(false);
         btProceso2.setEnabled(false);
         btProceso3.setEnabled(false);
         
@@ -95,7 +95,7 @@ public class Ventana extends javax.swing.JFrame {
         btAtras = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         lbProcess = new javax.swing.JLabel();
-        btProceso1 = new javax.swing.JButton();
+        btAdelgazar = new javax.swing.JButton();
         btProceso2 = new javax.swing.JButton();
         btProceso3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -177,11 +177,11 @@ public class Ventana extends javax.swing.JFrame {
         lbProcess.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         lbProcess.setText("Procesamiento:");
 
-        btProceso1.setText("Proceso1");
-        btProceso1.setEnabled(false);
-        btProceso1.addActionListener(new java.awt.event.ActionListener() {
+        btAdelgazar.setText("Adelgazamiento");
+        btAdelgazar.setEnabled(false);
+        btAdelgazar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btProceso1ActionPerformed(evt);
+                btAdelgazarActionPerformed(evt);
             }
         });
 
@@ -226,7 +226,7 @@ public class Ventana extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbProcess)
                         .addGap(18, 18, 18)
-                        .addComponent(btProceso1)
+                        .addComponent(btAdelgazar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btProceso2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -294,7 +294,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbProcess)
-                    .addComponent(btProceso1)
+                    .addComponent(btAdelgazar)
                     .addComponent(btProceso2)
                     .addComponent(btProceso3))
                 .addGap(3, 3, 3)
@@ -391,10 +391,10 @@ public class Ventana extends javax.swing.JFrame {
         //enableProcesos();
     }//GEN-LAST:event_btBlancoNegroActionPerformed
 
-    private void btProceso1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProceso1ActionPerformed
+    private void btAdelgazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdelgazarActionPerformed
         // TODO add your handling code here:
         disableFiltros();
-    }//GEN-LAST:event_btProceso1ActionPerformed
+    }//GEN-LAST:event_btAdelgazarActionPerformed
 
     private void btAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtrasActionPerformed
         // TODO add your handling code here:
@@ -402,7 +402,7 @@ public class Ventana extends javax.swing.JFrame {
         Huella anterior = modelo.getAnterior();
         modelo.setActual(new Huella(anterior));
         Huella salida = new Huella(anterior);
-        if(salida.getTipo().equals("blanco-negro")){
+        if(salida.getTipo().equals("blanco-negro") || salida.getTipo().equals("ruido")){
             salida = modelo.blancoNegrotoGray(salida);
         }
         BufferedImage buf = modelo.GraytoRGB(salida);
@@ -432,7 +432,7 @@ public class Ventana extends javax.swing.JFrame {
         lbHuellaSalida.setIcon(iconSalida);
         add(lbHuellaSalida);
         taLog.append("Imagen ecualizada y cargada \n");
-        
+        salida.setTipo("ecualizada");
         modelo.setAnterior(new Huella(modelo.getActual()));
         modelo.setActual(salida);
         btAtras.setEnabled(true);
@@ -468,17 +468,19 @@ public class Ventana extends javax.swing.JFrame {
             Huella salidabyn = modelo.blancoNegro(entrada,val);
             salida = modelo.quitarHuecos(salidabyn);
             salida = modelo.quitarPixels(salida);
-            salida = modelo.blancoNegrotoGray(salida);
-            BufferedImage sinhueco = modelo.GraytoRGB(salida);
+            Huella salidagris = modelo.blancoNegrotoGray(salida);
+            BufferedImage sinhueco = modelo.GraytoRGB(salidagris);
             ImageIcon iconSalida = new ImageIcon(sinhueco.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
             lbHuellaSalida.setIcon(iconSalida);
             add(lbHuellaSalida);
             taLog.append("Imagen cargada suavizada \n");
             
         }
+        salida.setTipo("ruido");
         modelo.setAnterior(new Huella(modelo.getActual()));
         modelo.setActual(salida);
         btAtras.setEnabled(true);
+        btAdelgazar.setEnabled(true);
     }//GEN-LAST:event_btRuidoActionPerformed
 
     /**
@@ -517,12 +519,12 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAdelgazar;
     private javax.swing.JButton btAtras;
     private javax.swing.JButton btBlancoNegro;
     private javax.swing.JButton btCargar;
     private javax.swing.JButton btEcualizador;
     private javax.swing.JButton btGris;
-    private javax.swing.JButton btProceso1;
     private javax.swing.JButton btProceso2;
     private javax.swing.JButton btProceso3;
     private javax.swing.JButton btRuido;

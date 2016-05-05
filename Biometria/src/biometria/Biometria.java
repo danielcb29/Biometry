@@ -193,7 +193,7 @@ public class Biometria {
         this.huella=huella;
         //modelo = new Huella(huella.getWidth(),huella.getHeight());
         modelo = RGBtoGray(huella);
-        actual = new Huella(huella.getWidth(),huella.getHeight());
+        actual = new Huella(modelo);
         //anterior = actual;
     }
     public Huella getModelo(){
