@@ -64,10 +64,6 @@ public class Biometria {
         return salida;
     }
     
-    public Huella ecualizar(){
-        return null;
-    }
-    
     //Metodos para procesar blanco y negro
     public Huella blancoNegro(Huella entrada,int humbral){
         //anterior = actual; 
@@ -105,6 +101,46 @@ public class Biometria {
     }
     //Fin metodos de blanco y negro
     
+    public Huella ecualizador(Huella entrada){
+        int width = huella.getWidth();
+        int height = huella.getHeight();
+        Huella salida = new Huella(width,height);
+        
+        int tampixel= width*height;
+        int[] histograma = new int[256];
+        int[] iarray = new int[1];
+        int i =0;
+        
+        for (int x = 1; x < width; x++) {
+            for (int y = 1; y < height; y++) {
+                    int valor= entrada.getPixel(x, y);
+                    histograma[valor]++;
+                }
+            }
+        int sum =0;
+        
+        float[] lut = new float[256];
+        for ( i=0; i < 255; ++i )
+        {
+            sum += histograma[i];
+            lut[i] = sum * 255 / tampixel;
+        }
+        
+        i=0;
+        for (int x = 1; x < width; x++) {
+            for (int y = 1; y < height; y++) {
+                int valor= entrada.getPixel(x, y);
+                int valorNuevo= (int) lut[valor];
+                salida.setPixel(x, y, valorNuevo);
+                i=i+1;
+            }
+        }
+        
+        return salida;
+    }
+    
+    
+    //Setters y Getters
     public void setHuella(BufferedImage huella){
         this.huella=huella;
         //modelo = new Huella(huella.getWidth(),huella.getHeight());

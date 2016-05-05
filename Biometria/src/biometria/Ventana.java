@@ -152,6 +152,11 @@ public class Ventana extends javax.swing.JFrame {
 
         btEcualizador.setText("Ecualizacion");
         btEcualizador.setEnabled(false);
+        btEcualizador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEcualizadorActionPerformed(evt);
+            }
+        });
 
         lbFiltros.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         lbFiltros.setText("Filtros:");
@@ -367,7 +372,7 @@ public class Ventana extends javax.swing.JFrame {
         add(lbHuellaSalida);
         taLog.append("Imagen cargada en blanco y negro \n");
         enableProcesos();
-        System.out.println("Tipo final byn:"+entrada.getTipo());
+        //System.out.println("Tipo final byn:"+entrada.getTipo());
     }//GEN-LAST:event_btBlancoNegroActionPerformed
 
     private void btProceso1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProceso1ActionPerformed
@@ -389,6 +394,17 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
         disableFiltros();
     }//GEN-LAST:event_btProceso3ActionPerformed
+
+    private void btEcualizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEcualizadorActionPerformed
+        // TODO add your handling code here:
+        Huella entrada = modelo.getModelo();
+        Huella salida = modelo.ecualizador(entrada);
+        BufferedImage pantalla = modelo.GraytoRGB(salida);
+        ImageIcon iconSalida = new ImageIcon(pantalla.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+        lbHuellaSalida.setIcon(iconSalida);
+        add(lbHuellaSalida);
+        taLog.append("Imagen ecualizada y cargada \n");
+    }//GEN-LAST:event_btEcualizadorActionPerformed
 
     /**
      * @param args the command line arguments
