@@ -120,7 +120,7 @@ public class Biometria {
         int sum =0;
         
         float[] lut = new float[256];
-        for ( i=0; i < 255; ++i )
+        for ( i=0; i < 256; ++i )
         {
             sum += histograma[i];
             lut[i] = sum * 255 / tampixel;
@@ -139,6 +139,58 @@ public class Biometria {
         return salida;
     }
     
+    //Metodos de quitar ruido
+    public Huella quitarHuecos(Huella entrada){
+        int width = huella.getWidth();
+        int height = huella.getHeight();
+        Huella salida = new Huella(width,height);
+        
+        for (int x = 2; x < width-1; x++) {
+            for (int y = 2; y < height-1; y++) {
+                //int sum =0;
+                int a;
+                int b;
+                int c;
+                int d;
+                int e;
+                int f;
+                int g;
+                int h;
+                
+                
+               //salida.setPixel(x, y,sum);
+            }
+        }
+        
+        return salida;
+    }
+    
+    public Huella quitarPixels(Huella entrada){
+        int width = huella.getWidth();
+        int height = huella.getHeight();
+        Huella salida = new Huella(width,height);
+        
+        for (int x = 2; x < width-1; x++) {
+            for (int y = 2; y < height-1; y++) {
+                //int sum =0;
+                int a;
+                int b;
+                int c;
+                int d;
+                int e;
+                int f;
+                int g;
+                int h;
+                
+                
+               //salida.setPixel(x, y,sum);
+            }
+        }
+        
+        return salida;
+    }
+    
+    //Fin metodos quitar ruido
     
     //Setters y Getters
     public void setHuella(BufferedImage huella){

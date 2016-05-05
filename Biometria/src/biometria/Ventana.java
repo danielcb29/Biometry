@@ -49,6 +49,7 @@ public class Ventana extends javax.swing.JFrame {
         btBlancoNegro.setEnabled(true);
         btEcualizador.setEnabled(true);
         btGris.setEnabled(true);
+        btRuido.setEnabled(true);
     }
     
     private void disableFiltros(){
@@ -99,6 +100,7 @@ public class Ventana extends javax.swing.JFrame {
         btProceso3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        btRuido = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -203,6 +205,14 @@ public class Ventana extends javax.swing.JFrame {
 
         jLabel7.setText("- UEX");
 
+        btRuido.setText("Eliminar Ruido");
+        btRuido.setEnabled(false);
+        btRuido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRuidoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -237,15 +247,17 @@ public class Ventana extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btAtras))
+                                            .addGroup(layout.createSequentialGroup()
                                                 .addComponent(btGris)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(btEcualizador)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btBlancoNegro))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btBlancoNegro)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btAtras))))
+                                                .addComponent(btRuido))))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,7 +289,8 @@ public class Ventana extends javax.swing.JFrame {
                     .addComponent(lbFiltros)
                     .addComponent(btGris)
                     .addComponent(btEcualizador)
-                    .addComponent(btBlancoNegro))
+                    .addComponent(btBlancoNegro)
+                    .addComponent(btRuido))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbProcess)
@@ -361,9 +374,8 @@ public class Ventana extends javax.swing.JFrame {
         }
         taLog.append("Valor de humbral para blanco y negro: "+val+"\n");
         
-        //setHuellaPrincipal();//Ponemos la imagen original en imagen de entrada
         Huella entrada = modelo.getModelo();
-        System.out.println(entrada.getTipo());
+        //entrada = modelo.ecualizador(entrada);
         Huella salidabyn = modelo.blancoNegro(entrada,val);
         Huella salidagray = modelo.blancoNegrotoGray(salidabyn);
         BufferedImage byn = modelo.GraytoRGB(salidagray);
@@ -371,8 +383,8 @@ public class Ventana extends javax.swing.JFrame {
         lbHuellaSalida.setIcon(iconSalida);
         add(lbHuellaSalida);
         taLog.append("Imagen cargada en blanco y negro \n");
-        enableProcesos();
-        //System.out.println("Tipo final byn:"+entrada.getTipo());
+        
+        //enableProcesos();
     }//GEN-LAST:event_btBlancoNegroActionPerformed
 
     private void btProceso1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProceso1ActionPerformed
@@ -405,6 +417,12 @@ public class Ventana extends javax.swing.JFrame {
         add(lbHuellaSalida);
         taLog.append("Imagen ecualizada y cargada \n");
     }//GEN-LAST:event_btEcualizadorActionPerformed
+
+    private void btRuidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRuidoActionPerformed
+        // TODO add your handling code here:
+        
+        //Recibe un blanco y negro
+    }//GEN-LAST:event_btRuidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -450,6 +468,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton btProceso1;
     private javax.swing.JButton btProceso2;
     private javax.swing.JButton btProceso3;
+    private javax.swing.JButton btRuido;
     private javax.swing.JButton btSalir;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

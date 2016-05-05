@@ -58,16 +58,18 @@
                                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
+                                              <Component id="btCargar" min="-2" pref="147" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btAtras" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Component id="btGris" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="btEcualizador" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="btBlancoNegro" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="btCargar" min="-2" pref="147" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="btAtras" min="-2" max="-2" attributes="0"/>
+                                              <Component id="btRuido" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -116,6 +118,7 @@
                   <Component id="btGris" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btEcualizador" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btBlancoNegro" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btRuido" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -308,6 +311,15 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="- UEX"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btRuido">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Eliminar Ruido"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRuidoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
