@@ -6,6 +6,7 @@
 package biometria;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -17,6 +18,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.GrayFilter;
 
@@ -187,6 +191,82 @@ public class Biometria {
     }
     
     //Fin metodos quitar ruido
+    
+    public Huella adelgazar(Huella entrada){
+        int width = huella.getWidth();
+        int height = huella.getHeight();
+        Huella salida = new Huella(entrada);
+        int[][] nbrs = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1},{-1, 1}, {-1, 0}, {-1, -1}, {0, -1}};
+        int[][][] nbrGroups = {{{0, 2, 4}, {2, 4, 6}}, {{0, 2, 6},{0, 4, 6}}};
+        List<Point> toWhite = new ArrayList<>();
+        
+        boolean firstStep = false;
+        boolean hasChanged;
+        
+        do{
+            hasChanged = false;
+            firstStep = !firstStep;
+            for (int x = 1; x < width-1; x++) {
+                for (int y = 1; y < height-1; y++) {
+                    if (salida.getPixel(x, y) != 1)
+                        continue;
+                    
+                    int nn = numNeighbors(x, y,salida,nbrs);
+                    if (nn < 2 || nn > 6)
+                        continue;
+ 
+                    if (numTransitions(x, y,salida,nbrs) != 1)
+                        continue;
+                    
+                    if (!atLeastOneIsWhite(x, y, firstStep ? 0 : 1, nbrGroups,nbrs,salida))
+                        continue;
+                    
+                    toWhite.add(new Point(y, x));
+                    hasChanged = true;
+                }
+            }
+            //System.out.println("While:"+hasChanged+" "+firstStep);
+            for (Point p : toWhite)
+                salida.setPixel(p.y, p.x, 0);
+            toWhite.clear();
+            
+        }while(firstStep || hasChanged);
+        
+        return salida;
+    }
+    
+    private int numNeighbors(int r, int c,Huella entrada,int[][] nbrs) {
+        
+        int count = 0;
+        for (int i = 0; i < nbrs.length - 1; i++)
+            if (entrada.getPixel(r + nbrs[i][1], c + nbrs[i][0]) == 1)
+                count++;
+        return count;
+    }
+    
+    private int numTransitions(int r, int c, Huella entrada, int[][] nbrs) {
+        int count = 0;
+        for (int i = 0; i < nbrs.length - 1; i++)
+            if (entrada.getPixel(r + nbrs[i][1], c + nbrs[i][0]) == 0) {
+                if (entrada.getPixel(r + nbrs[i + 1][1], c + nbrs[i + 1][0]) == 1)
+                    count++;
+            }
+        return count;
+    }
+    
+    private boolean atLeastOneIsWhite(int r, int c, int step, int[][][] nbrGroups, int[][] nbrs, Huella entrada) {
+        int count = 0;
+        int[][] group = nbrGroups[step];
+        for (int i = 0; i < 2; i++)
+            for (int j = 0; j < group[i].length; j++) {
+                int[] nbr = nbrs[group[i][j]];
+                if (entrada.getPixel(r + nbr[1], c + nbr[0]) == 1) {
+                    count++;
+                    break;
+                }
+            }
+        return count > 1;
+    }
     
     //Setters y Getters
     public void setHuella(BufferedImage huella){

@@ -42,6 +42,10 @@ public class Huella {
         return imagen;
     }
     
+    public void setImagen(int[][] e){
+        this.imagen = e;
+    }
+    
     public int getAncho(){
         return ancho;
     }

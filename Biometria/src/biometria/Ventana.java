@@ -393,7 +393,21 @@ public class Ventana extends javax.swing.JFrame {
 
     private void btAdelgazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdelgazarActionPerformed
         // TODO add your handling code here:
-        disableFiltros();
+        Huella actual = modelo.getActual();
+        if(actual.getTipo().equals("blanco-negro")){
+            taLog.append("Cargando adelgazamiento... \n");
+            Huella salida = modelo.adelgazar(actual);
+            Huella salidagray = modelo.blancoNegrotoGray(salida);
+            BufferedImage byn = modelo.GraytoRGB(salidagray);
+            ImageIcon iconSalida = new ImageIcon(byn.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+            lbHuellaSalida.setIcon(iconSalida);
+            add(lbHuellaSalida);
+            taLog.append("Imagen adelgazada \n");
+
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Debe tener cargado el filtro de ruido antes de adelgazar","Aviso!",  JOptionPane.WARNING_MESSAGE);
+            taLog.append("Warning!: Debe tener cargado el filtro de ruido antes de adelgazar \n");
+        }
     }//GEN-LAST:event_btAdelgazarActionPerformed
 
     private void btAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtrasActionPerformed
