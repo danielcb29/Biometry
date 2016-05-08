@@ -5,24 +5,10 @@
  */
 package biometria;
 
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.FilteredImageSource;
-import java.awt.image.ImageFilter;
-import java.awt.image.ImageProducer;
-import java.awt.image.WritableRaster;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import javax.imageio.ImageIO;
-import javax.swing.GrayFilter;
 
 /**
  *
@@ -113,7 +99,7 @@ public class Biometria {
         int tampixel= width*height;
         int[] histograma = new int[256];
         int[] iarray = new int[1];
-        int i =0;
+        int i;
         
         for (int x = 1; x < width; x++) {
             for (int y = 1; y < height; y++) {
@@ -225,7 +211,6 @@ public class Biometria {
                     hasChanged = true;
                 }
             }
-            //System.out.println("While:"+hasChanged+" "+firstStep);
             for (Point p : toWhite)
                 salida.setPixel(p.y, p.x, 0);
             toWhite.clear();
@@ -271,10 +256,8 @@ public class Biometria {
     //Setters y Getters
     public void setHuella(BufferedImage huella){
         this.huella=huella;
-        //modelo = new Huella(huella.getWidth(),huella.getHeight());
         modelo = RGBtoGray(huella);
         actual = new Huella(modelo);
-        //anterior = actual;
     }
     public Huella getModelo(){
         return this.modelo;

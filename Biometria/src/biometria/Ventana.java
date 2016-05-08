@@ -394,7 +394,7 @@ public class Ventana extends javax.swing.JFrame {
     private void btAdelgazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdelgazarActionPerformed
         // TODO add your handling code here:
         Huella actual = modelo.getActual();
-        if(actual.getTipo().equals("blanco-negro")){
+        if(actual.getTipo().equals("ruido")){
             taLog.append("Cargando adelgazamiento... \n");
             Huella salida = modelo.adelgazar(actual);
             Huella salidagray = modelo.blancoNegrotoGray(salida);
