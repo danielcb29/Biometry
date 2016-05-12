@@ -396,13 +396,17 @@ public class Ventana extends javax.swing.JFrame {
         Huella actual = modelo.getActual();
         if(actual.getTipo().equals("ruido")){
             taLog.append("Cargando adelgazamiento... \n");
-            Huella salida = modelo.adelgazar(actual);
-            Huella salidagray = modelo.blancoNegrotoGray(salida);
-            BufferedImage byn = modelo.GraytoRGB(salidagray);
-            ImageIcon iconSalida = new ImageIcon(byn.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+            Huella actualGray = modelo.blancoNegrotoGray(actual);
+            BufferedImage bfActual = modelo.GraytoRGB(actualGray);
+            BufferedImage bfSalida = modelo.adelgazar(bfActual);
+            ImageIcon iconSalida = new ImageIcon(bfSalida);
             lbHuellaSalida.setIcon(iconSalida);
             add(lbHuellaSalida);
             taLog.append("Imagen adelgazada \n");
+            Huella nueva = modelo.RGBtoGray(bfSalida);
+            modelo.setAnterior(new Huella(modelo.getActual()));
+            modelo.setActual(nueva);
+            btAtras.setEnabled(true);
 
         }else{
             JOptionPane.showMessageDialog(rootPane, "Debe tener cargado el filtro de ruido antes de adelgazar","Aviso!",  JOptionPane.WARNING_MESSAGE);
