@@ -21,6 +21,7 @@ public class Biometria {
     private Huella modelo;
     private Huella actual; 
     private Huella anterior;
+    private List<Minutia> minutias;
     
     public Biometria(){
         
@@ -187,32 +188,32 @@ public class Biometria {
     
     //Detectar minutias
     
-    public List<Minutia> detectarMinutias(Huella entrada){
+    public List<Minutia> detectarMinutias(Huella entrada, int marcox, int marcoy){
         int width = huella.getWidth();
         int height = huella.getHeight();
         
         List<Minutia> listaMinutias;
         listaMinutias = new LinkedList<>();
-        for (int x = 1; x < width-1; x++) {
-            for (int y = 1; y < height-1; y++) {
+        for (int x = (1 + marcox); x < ((width-1)-marcox); x++) {
+            for (int y = (1+marcoy); y < ((height-1)-marcoy); y++) {
                 int resultado = cnminutias(entrada, x, y);
-                //System.out.println("CALCULO:"+resultado);
+                System.out.println("CALCULO:"+resultado);
                 if(resultado == 1){
                     //Corte
-                    System.out.println("CORTE");
+                    //System.out.println("CORTE");
                     Minutia min = new Minutia(x,y,"Corte");
                     listaMinutias.add(min);
                 }else{
                     if(resultado == 3){
                         //Bifulcacion
-                        System.out.println("BIFULCACION");
+                        //System.out.println("BIFULCACION");
                         Minutia min = new Minutia(x,y,"Bifulcacion");
                         listaMinutias.add(min);
                     }
                 }
             }
         }
-        
+        minutias = listaMinutias;
         return listaMinutias;
        
     }
