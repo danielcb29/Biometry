@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -40,7 +41,7 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     private void setHuellaPrincipal(){
-        ImageIcon iconHuella = new ImageIcon(huella.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+        ImageIcon iconHuella = new ImageIcon(huella);
         lbHuellaEntrada.setIcon(iconHuella);
         add(lbHuellaEntrada);
     }
@@ -61,14 +62,14 @@ public class Ventana extends javax.swing.JFrame {
     private void enableProcesos(){
         btAdelgazar.setEnabled(true);
         btProceso2.setEnabled(true);
-        btProceso3.setEnabled(true);
+        btMinutias.setEnabled(true);
         
     }
     
     private void disableProcesos(){
         btAdelgazar.setEnabled(false);
         btProceso2.setEnabled(false);
-        btProceso3.setEnabled(false);
+        btMinutias.setEnabled(false);
         
     }
     /**
@@ -86,7 +87,6 @@ public class Ventana extends javax.swing.JFrame {
         btGris = new javax.swing.JButton();
         lbCargar = new javax.swing.JLabel();
         btSalir = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         lbHuellaSalida = new javax.swing.JLabel();
         lbHuellaEntrada = new javax.swing.JLabel();
         btBlancoNegro = new javax.swing.JButton();
@@ -97,10 +97,9 @@ public class Ventana extends javax.swing.JFrame {
         lbProcess = new javax.swing.JLabel();
         btAdelgazar = new javax.swing.JButton();
         btProceso2 = new javax.swing.JButton();
-        btProceso3 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        btMinutias = new javax.swing.JButton();
         btRuido = new javax.swing.JButton();
+        lbCargar1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -135,8 +134,6 @@ public class Ventana extends javax.swing.JFrame {
                 btSalirActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("Daniel Correa Barrios");
 
         lbHuellaSalida.setText("Huella Resultado");
         lbHuellaSalida.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -185,7 +182,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        btProceso2.setText("Proceso2");
+        btProceso2.setText("Guardar");
         btProceso2.setEnabled(false);
         btProceso2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,17 +190,13 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        btProceso3.setText("Proceso3");
-        btProceso3.setEnabled(false);
-        btProceso3.addActionListener(new java.awt.event.ActionListener() {
+        btMinutias.setText("Detectar Minutias");
+        btMinutias.setEnabled(false);
+        btMinutias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btProceso3ActionPerformed(evt);
+                btMinutiasActionPerformed(evt);
             }
         });
-
-        jLabel6.setText("Escuela Politecnica");
-
-        jLabel7.setText("- UEX");
 
         btRuido.setText("Eliminar Ruido");
         btRuido.setEnabled(false);
@@ -213,6 +206,9 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        lbCargar1.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        lbCargar1.setText("Biometria y Seguridad de Sistemas, Daniel Correa Barrios");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,96 +217,89 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(lbCargar1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbProcess)
-                        .addGap(18, 18, 18)
-                        .addComponent(btAdelgazar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btProceso2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btProceso3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbHuellaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                        .addComponent(lbHuellaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbHuellaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbHuellaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbCargar)
-                                            .addComponent(lbFiltros))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btAtras))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(btGris)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btEcualizador)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btBlancoNegro)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btRuido))))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(lbCargar)
+                                                .addComponent(lbFiltros))
+                                            .addGap(18, 18, 18)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel2)
                                                 .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(jLabel6)
+                                                    .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                    .addComponent(btAtras))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(btGris)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(jLabel7)))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(41, 41, 41))))
+                                                    .addComponent(btEcualizador))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(btBlancoNegro)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(btRuido))))
+                                        .addComponent(jScrollPane1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lbProcess)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btAdelgazar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btMinutias)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btProceso2))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(14, 14, 14))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbHuellaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbHuellaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbCargar)
-                    .addComponent(btCargar)
-                    .addComponent(btAtras))
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbFiltros)
-                    .addComponent(btGris)
-                    .addComponent(btEcualizador)
-                    .addComponent(btBlancoNegro)
-                    .addComponent(btRuido))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbProcess)
-                    .addComponent(btAdelgazar)
-                    .addComponent(btProceso2)
-                    .addComponent(btProceso3))
-                .addGap(3, 3, 3)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                .addGap(28, 28, 28)
+                .addComponent(lbCargar1)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbHuellaEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbCargar)
+                            .addComponent(btCargar)
+                            .addComponent(btAtras))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbFiltros)
+                            .addComponent(btGris)
+                            .addComponent(btEcualizador))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btBlancoNegro)
+                            .addComponent(btRuido))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbProcess)
+                            .addComponent(btAdelgazar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btMinutias)
+                            .addComponent(btProceso2))
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))))
-                .addContainerGap())
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbHuellaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -320,7 +309,7 @@ public class Ventana extends javax.swing.JFrame {
 
             Huella result  = modelo.getModelo();
             BufferedImage gris = modelo.GraytoRGB(result);
-            ImageIcon iconSalida = new ImageIcon(gris.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+            ImageIcon iconSalida = new ImageIcon(gris);
             lbHuellaSalida.setIcon(iconSalida);
             add(lbHuellaSalida);
             taLog.append("Imagen cargada en escala de grises \n");
@@ -340,9 +329,12 @@ public class Ventana extends javax.swing.JFrame {
         File archivo = jfc.getSelectedFile();
         try {
             huella = ImageIO.read(archivo);
-            ImageIcon iconHuella = new ImageIcon(huella.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+            //ImageIcon iconHuella = new ImageIcon(huella.getScaledInstance(300, 400, Image.SCALE_DEFAULT));
+            ImageIcon iconHuella = new ImageIcon(huella);
             lbHuellaEntrada.setIcon(iconHuella);
             add(lbHuellaEntrada);
+            lbHuellaEntrada.setText("");
+            lbHuellaSalida.setText("");
             modelo.setHuella(huella);
             enableFiltros();            
             taLog.append("Imagen cargada correctamente! \n");
@@ -380,7 +372,7 @@ public class Ventana extends javax.swing.JFrame {
         Huella salidabyn = modelo.blancoNegro(entrada,val);
         Huella salidagray = modelo.blancoNegrotoGray(salidabyn);
         BufferedImage byn = modelo.GraytoRGB(salidagray);
-        ImageIcon iconSalida = new ImageIcon(byn.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+        ImageIcon iconSalida = new ImageIcon(byn);
         lbHuellaSalida.setIcon(iconSalida);
         add(lbHuellaSalida);
         taLog.append("Imagen cargada en blanco y negro \n");
@@ -404,10 +396,11 @@ public class Ventana extends javax.swing.JFrame {
             add(lbHuellaSalida);
             taLog.append("Imagen adelgazada \n");
             Huella nueva = modelo.RGBtoGray(bfSalida);
+            Huella nuevabyn = modelo.blancoNegro(nueva, 180);//Convertir a blanco-negro, revisar
             modelo.setAnterior(new Huella(modelo.getActual()));
-            modelo.setActual(nueva);
+            modelo.setActual(nuevabyn);
             btAtras.setEnabled(true);
-
+            btMinutias.setEnabled(true);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Debe tener cargado el filtro de ruido antes de adelgazar","Aviso!",  JOptionPane.WARNING_MESSAGE);
             taLog.append("Warning!: Debe tener cargado el filtro de ruido antes de adelgazar \n");
@@ -424,7 +417,7 @@ public class Ventana extends javax.swing.JFrame {
             salida = modelo.blancoNegrotoGray(salida);
         }
         BufferedImage buf = modelo.GraytoRGB(salida);
-        ImageIcon iconSalida = new ImageIcon(buf.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+        ImageIcon iconSalida = new ImageIcon(buf);
         lbHuellaSalida.setIcon(iconSalida);
         add(lbHuellaSalida);
         taLog.append("Imagen anterior cargada \n");
@@ -436,17 +429,12 @@ public class Ventana extends javax.swing.JFrame {
         disableFiltros();
     }//GEN-LAST:event_btProceso2ActionPerformed
 
-    private void btProceso3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProceso3ActionPerformed
-        // TODO add your handling code here:
-        disableFiltros();
-    }//GEN-LAST:event_btProceso3ActionPerformed
-
     private void btEcualizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEcualizadorActionPerformed
         // TODO add your handling code here:
         Huella entrada = modelo.getModelo();
         Huella salida = modelo.ecualizador(entrada);
         BufferedImage pantalla = modelo.GraytoRGB(salida);
-        ImageIcon iconSalida = new ImageIcon(pantalla.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+        ImageIcon iconSalida = new ImageIcon(pantalla);
         lbHuellaSalida.setIcon(iconSalida);
         add(lbHuellaSalida);
         taLog.append("Imagen ecualizada y cargada \n");
@@ -465,9 +453,9 @@ public class Ventana extends javax.swing.JFrame {
             
             salida = modelo.quitarHuecos(actual);
             salida = modelo.quitarPixels(salida);
-            salida = modelo.blancoNegrotoGray(salida);
-            BufferedImage sinhueco = modelo.GraytoRGB(salida);
-            ImageIcon iconSalida = new ImageIcon(sinhueco.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+            Huella salidagris = modelo.blancoNegrotoGray(salida);
+            BufferedImage sinhueco = modelo.GraytoRGB(salidagris);
+            ImageIcon iconSalida = new ImageIcon(sinhueco);
             lbHuellaSalida.setIcon(iconSalida);
             add(lbHuellaSalida);
             taLog.append("Imagen cargada suavizada \n");
@@ -488,7 +476,7 @@ public class Ventana extends javax.swing.JFrame {
             salida = modelo.quitarPixels(salida);
             Huella salidagris = modelo.blancoNegrotoGray(salida);
             BufferedImage sinhueco = modelo.GraytoRGB(salidagris);
-            ImageIcon iconSalida = new ImageIcon(sinhueco.getScaledInstance(256, 256, Image.SCALE_DEFAULT));
+            ImageIcon iconSalida = new ImageIcon(sinhueco);
             lbHuellaSalida.setIcon(iconSalida);
             add(lbHuellaSalida);
             taLog.append("Imagen cargada suavizada \n");
@@ -500,6 +488,20 @@ public class Ventana extends javax.swing.JFrame {
         btAtras.setEnabled(true);
         btAdelgazar.setEnabled(true);
     }//GEN-LAST:event_btRuidoActionPerformed
+
+    private void btMinutiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMinutiasActionPerformed
+        // TODO add your handling code here:
+        Huella actual = modelo.getActual();
+        System.out.println(actual.getTipo());
+        List<Minutia> minutias = modelo.detectarMinutias(actual);
+        taLog.append("LISTA DE PUNTOS DE MINUTIAS ENCONTRADOS: \n");
+        int i = 1;
+        for(Minutia m : minutias){
+            taLog.append(i+" Tipo: "+m.getTipo()+" X: "+m.getX()+" Y:"+m.getY()+" \n");
+            System.out.println(i+" Tipo: "+m.getTipo()+" X: "+m.getX()+" Y:"+m.getY());
+            i++;
+        }
+    }//GEN-LAST:event_btMinutiasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -530,8 +532,7 @@ public class Ventana extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Ventana().setVisible(true);
+            public void run() {new Ventana().setVisible(true);
             }
         });
     }
@@ -543,16 +544,14 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton btCargar;
     private javax.swing.JButton btEcualizador;
     private javax.swing.JButton btGris;
+    private javax.swing.JButton btMinutias;
     private javax.swing.JButton btProceso2;
-    private javax.swing.JButton btProceso3;
     private javax.swing.JButton btRuido;
     private javax.swing.JButton btSalir;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbCargar;
+    private javax.swing.JLabel lbCargar1;
     private javax.swing.JLabel lbFiltros;
     private javax.swing.JLabel lbHuellaEntrada;
     private javax.swing.JLabel lbHuellaSalida;

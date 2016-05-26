@@ -8,6 +8,7 @@ package biometria;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -181,9 +182,62 @@ public class Biometria {
     //adelgazar 
     public BufferedImage adelgazar(BufferedImage entrada){
         Thinner adelgazador = new Thinner(entrada);
-        System.out.println("Adelgazando en modelo...");
         return adelgazador.getResult();
     }
+    
+    //Detectar minutias
+    
+    public List<Minutia> detectarMinutias(Huella entrada){
+        int width = huella.getWidth();
+        int height = huella.getHeight();
+        
+        List<Minutia> listaMinutias;
+        listaMinutias = new LinkedList<>();
+        for (int x = 1; x < width-1; x++) {
+            for (int y = 1; y < height-1; y++) {
+                int resultado = cnminutias(entrada, x, y);
+                //System.out.println("CALCULO:"+resultado);
+                if(resultado == 1){
+                    //Corte
+                    System.out.println("CORTE");
+                    Minutia min = new Minutia(x,y,"Corte");
+                    listaMinutias.add(min);
+                }else{
+                    if(resultado == 3){
+                        //Bifulcacion
+                        System.out.println("BIFULCACION");
+                        Minutia min = new Minutia(x,y,"Bifulcacion");
+                        listaMinutias.add(min);
+                    }
+                }
+            }
+        }
+        
+        return listaMinutias;
+       
+    }
+    
+    public int cnminutias(Huella entrada, int x, int y){
+                //int p = entrada.getPixel(x, y);
+                int p4 = entrada.getPixel(x-1, y-1);
+                int p5 = entrada.getPixel(x-1, y);
+                int p6 = entrada.getPixel(x-1, y+1);
+                int p3 = entrada.getPixel(x, y-1);
+                int p7 = entrada.getPixel(x, y+1);
+                int p2 = entrada.getPixel(x+1, y-1);
+                int p1 = entrada.getPixel(x+1, y);
+                int p8 = entrada.getPixel(x+1, y+1);
+                int[] puntos = {p1,p2,p3,p4,p5,p6,p7,p8,p1};
+                int result = 0;
+                for(int i = 0; i<puntos.length-1;i++){
+                    result += Math.abs(puntos[i] - puntos[i+1]);
+                }
+                result*=0.5;
+            
+        return result;
+    }
+    
+    
     //Setters y Getters
     public void setHuella(BufferedImage huella){
         this.huella=huella;
