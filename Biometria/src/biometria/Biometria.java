@@ -7,6 +7,8 @@ package biometria;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -197,16 +199,16 @@ public class Biometria {
         for (int x = (1 + marcox); x < ((width-1)-marcox); x++) {
             for (int y = (1+marcoy); y < ((height-1)-marcoy); y++) {
                 int resultado = cnminutias(entrada, x, y);
-                System.out.println("CALCULO:"+resultado);
+                
                 if(resultado == 1){
                     //Corte
-                    //System.out.println("CORTE");
+                
                     Minutia min = new Minutia(x,y,"Corte");
                     listaMinutias.add(min);
                 }else{
                     if(resultado == 3){
                         //Bifulcacion
-                        //System.out.println("BIFULCACION");
+                
                         Minutia min = new Minutia(x,y,"Bifulcacion");
                         listaMinutias.add(min);
                     }
@@ -238,6 +240,15 @@ public class Biometria {
         return result;
     }
     
+    //Guardado de minutias
+    public void guardarMinutias(){
+        try {
+            FileOutputStream fos = new FileOutputStream("minutias.log");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(this.minutias);
+        }
+        catch (Exception e) { System.out.println(e); }
+    }
     
     //Setters y Getters
     public void setHuella(BufferedImage huella){

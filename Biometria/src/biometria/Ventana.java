@@ -61,14 +61,14 @@ public class Ventana extends javax.swing.JFrame {
     
     private void enableProcesos(){
         btAdelgazar.setEnabled(true);
-        btProceso2.setEnabled(true);
+        btGuardar.setEnabled(true);
         btMinutias.setEnabled(true);
         
     }
     
     private void disableProcesos(){
         btAdelgazar.setEnabled(false);
-        btProceso2.setEnabled(false);
+        btGuardar.setEnabled(false);
         btMinutias.setEnabled(false);
         
     }
@@ -96,7 +96,7 @@ public class Ventana extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         lbProcess = new javax.swing.JLabel();
         btAdelgazar = new javax.swing.JButton();
-        btProceso2 = new javax.swing.JButton();
+        btGuardar = new javax.swing.JButton();
         btMinutias = new javax.swing.JButton();
         btRuido = new javax.swing.JButton();
         lbCargar1 = new javax.swing.JLabel();
@@ -182,11 +182,11 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        btProceso2.setText("Guardar");
-        btProceso2.setEnabled(false);
-        btProceso2.addActionListener(new java.awt.event.ActionListener() {
+        btGuardar.setText("Guardar");
+        btGuardar.setEnabled(false);
+        btGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btProceso2ActionPerformed(evt);
+                btGuardarActionPerformed(evt);
             }
         });
 
@@ -229,26 +229,25 @@ public class Ventana extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lbCargar)
-                                        .addComponent(lbFiltros))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(btAtras))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(btGris)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(btEcualizador))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(btBlancoNegro)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(btRuido))))
-                                .addComponent(jScrollPane1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lbCargar)
+                                    .addComponent(lbFiltros))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btAtras))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btGris)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btEcualizador))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btBlancoNegro)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btRuido))))
+                            .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbProcess)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -256,7 +255,7 @@ public class Ventana extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btMinutias)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btProceso2)))
+                                .addComponent(btGuardar)))
                         .addGap(14, 14, 14))))
         );
         layout.setVerticalGroup(
@@ -288,7 +287,7 @@ public class Ventana extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btMinutias)
-                            .addComponent(btProceso2))
+                            .addComponent(btGuardar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -427,10 +426,11 @@ public class Ventana extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btAtrasActionPerformed
 
-    private void btProceso2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProceso2ActionPerformed
+    private void btGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuardarActionPerformed
         // TODO add your handling code here:
-        disableFiltros();
-    }//GEN-LAST:event_btProceso2ActionPerformed
+        modelo.guardarMinutias();
+        taLog.append("Minutias guardadas con éxito en el archivo: minutias.log");
+    }//GEN-LAST:event_btGuardarActionPerformed
 
     private void btEcualizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEcualizadorActionPerformed
         // TODO add your handling code here:
@@ -496,14 +496,15 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
         Huella actual = modelo.getActual();
         System.out.println(actual.getTipo());
-        List<Minutia> minutias = modelo.detectarMinutias(actual,20,20);
+        List<Minutia> minutias = modelo.detectarMinutias(actual,80,80);
         taLog.append("LISTA DE PUNTOS DE MINUTIAS ENCONTRADOS: \n");
         int i = 1;
         for(Minutia m : minutias){
             taLog.append(i+" Tipo: "+m.getTipo()+" X: "+m.getX()+" Y:"+m.getY()+" \n");
-            System.out.println(i+" Tipo: "+m.getTipo()+" X: "+m.getX()+" Y:"+m.getY());
+            //System.out.println(i+" Tipo: "+m.getTipo()+" X: "+m.getX()+" Y:"+m.getY());
             i++;
         }
+        btGuardar.setEnabled(true);
     }//GEN-LAST:event_btMinutiasActionPerformed
 
     /**
@@ -547,8 +548,8 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton btCargar;
     private javax.swing.JButton btEcualizador;
     private javax.swing.JButton btGris;
+    private javax.swing.JButton btGuardar;
     private javax.swing.JButton btMinutias;
-    private javax.swing.JButton btProceso2;
     private javax.swing.JButton btRuido;
     private javax.swing.JButton btSalir;
     private javax.swing.JLabel jLabel4;
